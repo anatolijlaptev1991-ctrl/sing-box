@@ -1,6 +1,6 @@
 //go:build with_usbip && (linux || (darwin && cgo) || windows)
 
-package main
+package boxmain
 
 import (
 	"context"

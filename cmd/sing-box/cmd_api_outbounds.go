@@ -1,4 +1,4 @@
-package main
+package boxmain
 
 import (
 	F "github.com/sagernet/sing/common/format"

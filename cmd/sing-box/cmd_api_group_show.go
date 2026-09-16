@@ -1,4 +1,4 @@
-package main
+package boxmain
 
 import (
 	E "github.com/sagernet/sing/common/exceptions"
