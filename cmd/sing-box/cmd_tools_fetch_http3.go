@@ -1,6 +1,6 @@
 //go:build with_quic
 
-package main
+package boxmain
 
 import (
 	"context"
