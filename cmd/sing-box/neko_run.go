@@ -4,15 +4,19 @@ import (
 	"context"
 
 	box "github.com/sagernet/sing-box"
+	"github.com/sagernet/sing-box/include"
 	"github.com/sagernet/sing-box/option"
 	E "github.com/sagernet/sing/common/exceptions"
 )
 
 // Create used in nekoray: build and start an instance from config JSON
-// without touching command line flags.
+// without touching command line flags. The context must carry the protocol
+// registries, otherwise option parsing cannot resolve transport types.
 func Create(nekoConfigContent []byte) (*box.Box, context.CancelFunc, error) {
+	parseCtx := include.Context(context.Background())
+
 	var options option.Options
-	err := options.UnmarshalJSONContext(context.Background(), nekoConfigContent)
+	err := options.UnmarshalJSONContext(parseCtx, nekoConfigContent)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -22,7 +26,7 @@ func Create(nekoConfigContent []byte) (*box.Box, context.CancelFunc, error) {
 		}
 		options.Log.DisableColor = true
 	}
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(parseCtx)
 	instance, err := box.New(box.Options{
 		Context: ctx,
 		Options: options,
